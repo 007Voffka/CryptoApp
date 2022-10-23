@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.FragmentCoinDetailInfo">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewCoinLogoDetail"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/item_background"
+            android:contentDescription="@string/crypto_coin_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_compass"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/textViewDetailSymbols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_background"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewCoinLogoDetail"
+            tools:text="BTC / USD" />
+
+        <TextView
+            android:id="@+id/textViewDetailPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/price"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailSymbols" />
+
+        <TextView
+            android:id="@+id/textViewDailyMinimumLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/daily_minimum"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailPriceLabel" />
+
+        <TextView
+            android:id="@+id/textViewDailyMaximumLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/daily_maximum"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDailyMinimumLabel" />
+
+        <TextView
+            android:id="@+id/textViewLastTradeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/last_trade"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDailyMaximumLabel" />
+
+        <TextView
+            android:id="@+id/textViewDetailLastUpdateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/last_update_detail"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewLastTradeLabel" />
+
+        <TextView
+            android:id="@+id/textViewDetailPriceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/textViewDetailPriceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailSymbols"
+            tools:text="723.32" />
+
+        <TextView
+            android:id="@+id/textViewDailyMinimumInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/textViewDailyMinimumLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDetailPriceLabel"
+            tools:text="704.68" />
+
+        <TextView
+            android:id="@+id/textViewDailyMaximumInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/textViewDailyMaximumLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDailyMinimumLabel"
+            tools:ignore="TextContrastCheck"
+            tools:text="757.21" />
+
+        <TextView
+            android:id="@+id/textViewLastTradeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/textViewLastTradeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDailyMaximumLabel"
+            tools:text="CG-Trader" />
+
+        <TextView
+            android:id="@+id/textViewLastUpdateInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/textViewDetailLastUpdateLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLastTradeInfo"
+            tools:text="21:47:14" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

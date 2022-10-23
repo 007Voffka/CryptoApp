@@ -4,14 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_coin_detail.*
 
 class CoinDetailActivity : AppCompatActivity() {
-
-    private lateinit var viewModel : CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,25 +15,21 @@ class CoinDetailActivity : AppCompatActivity() {
             finish()
             return
         }
-        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL_KEY)
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        fromSymbol?.let {
-            viewModel.getDetailInfo(fromSymbol).observe(this) {
-                val symbolsTemplate = this.resources.getString(R.string.symbols_template)
-                with(it) {
-                    textViewDetailPriceInfo.text = price.toString()
-                    textViewDailyMinimumInfo.text = lowDay.toString()
-                    textViewDailyMaximumInfo.text = highDay.toString()
-                    textViewLastTradeInfo.text = lastMarket
-                    textViewLastUpdateInfo.text = getFormattedTime()
-                    Picasso.get().load(getFullImageUrl()).into(imageViewCoinLogoDetail)
-                    textViewDetailSymbols.text = String.format(symbolsTemplate, fromSymbol, toSymbol)
-                }
-        } }
+        val coinName = intent.getStringExtra(EXTRA_FROM_SYMBOL_KEY)
+        coinName?.let {
+            launchFragment(it)
+        }
     }
+
+    private fun launchFragment(coinName : String) {
+        val fragment = FragmentCoinDetailInfo.newInstance(coinName)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainerActivityCoinDetailInfo, fragment)
+            .commit()
+    }
+
     companion object {
         private const val EXTRA_FROM_SYMBOL_KEY = "fSym"
-
 
     fun newIntent(context : Context, fSymForIntent :String) : Intent {
         val intent = Intent(context, CoinDetailActivity::class.java)
