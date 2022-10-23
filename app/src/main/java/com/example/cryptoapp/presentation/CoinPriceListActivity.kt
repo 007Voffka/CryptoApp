@@ -4,32 +4,56 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
-import com.example.cryptoapp.domain.CoinPriceInfo
-import kotlinx.android.synthetic.main.activity_coin_price_list.*
+import com.example.cryptoapp.databinding.ActivityCoinPriceListBinding
+import com.example.cryptoapp.domain.CoinInfo
 
 class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var viewModel : CoinViewModel
+    private var _binding : ActivityCoinPriceListBinding? = null
+    private val binding : ActivityCoinPriceListBinding
+    get() = _binding ?: throw RuntimeException("ActivityCoinPriceListBinding == null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_price_list)
+        _binding = ActivityCoinPriceListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         this.actionBar?.hide()
-        val recyclerViewCoinPriceList = recyclerViewCoinPriceList
         val adapter = CoinInfoAdapter(this)
-        adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
-                val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
-                )
-                startActivity(intent)
+
+        if(binding.FragmentContainerMainActivityLand == null) {
+            adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
+                override fun onCoinClick(coinFullInfo: CoinInfo) {
+                    val intent = CoinDetailActivity.newIntent(
+                        this@CoinPriceListActivity,
+                        coinFullInfo.fromSymbol
+                    )
+                    startActivity(intent)
+                }
+            }
+        } else {
+            adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
+                override fun onCoinClick(coinFullInfo: CoinInfo) {
+                    val fragment = FragmentCoinDetailInfo.newInstance(coinFullInfo.fromSymbol)
+                    supportFragmentManager.popBackStack()
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.FragmentContainerMainActivityLand, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
         }
-        recyclerViewCoinPriceList.adapter = adapter
+
+        binding.recyclerViewCoinPriceList.adapter = adapter
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.priceList.observe(this) {
-            adapter.coinInfoList = it
+        viewModel.coinInfoList.observe(this) {
+            adapter.submitList(it)
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

@@ -8,4 +8,6 @@
     <string name="daily_maximum">Daily maximum:</string>
     <string name="last_trade">Last trade:</string>
     <string name="last_update_detail">Last update:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
