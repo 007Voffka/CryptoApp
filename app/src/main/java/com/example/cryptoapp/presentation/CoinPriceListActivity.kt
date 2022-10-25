@@ -2,19 +2,26 @@ package com.example.cryptoapp.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.example.cryptoapp.domain.CoinInfo
+import com.example.cryptoapp.presentation.coin_recycler_view.CoinInfoAdapter
+import javax.inject.Inject
 
 class CoinPriceListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : CoinViewModel
+    @Inject
+    lateinit var viewModel : CoinViewModel
     private var _binding : ActivityCoinPriceListBinding? = null
     private val binding : ActivityCoinPriceListBinding
     get() = _binding ?: throw RuntimeException("ActivityCoinPriceListBinding == null")
 
+    private val component by lazy {
+        (application as CoinApp).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         _binding = ActivityCoinPriceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,7 +53,6 @@ class CoinPriceListActivity : AppCompatActivity() {
         }
 
         binding.recyclerViewCoinPriceList.adapter = adapter
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.coinInfoList.observe(this) {
             adapter.submitList(it)
         }

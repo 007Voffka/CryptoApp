@@ -2,17 +2,20 @@ package com.example.cryptoapp.data.workers
 
 import android.content.Context
 import androidx.work.*
-import com.example.cryptoapp.data.database.CoinDatabase
+import com.example.cryptoapp.data.database.CoinInfoDao
 import com.example.cryptoapp.data.mapper.CoinMapper
-import com.example.cryptoapp.data.network.ApiFactory
+import com.example.cryptoapp.data.network.ApiService
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class UpdateDataWorker(context: Context, workerParameters: WorkerParameters)
+class UpdateDataWorker(
+    context: Context,
+    workerParameters: WorkerParameters,
+    private val coinInfoDao : CoinInfoDao,
+    private val mapper : CoinMapper,
+    private val apiService : ApiService
+)
     : CoroutineWorker(context, workerParameters) {
-
-    private val coinInfoDao = CoinDatabase.getInstance(context).coinPriceInfoDao()
-    private val mapper = CoinMapper()
-    private val apiService = ApiFactory.apiService
 
     override suspend fun doWork(): Result {
         while(true) {
@@ -39,6 +42,25 @@ class UpdateDataWorker(context: Context, workerParameters: WorkerParameters)
             return OneTimeWorkRequestBuilder<UpdateDataWorker>()
                 .setConstraints(constraints)
                 .build()
+        }
+    }
+
+    class Factory @Inject constructor(
+        private val coinInfoDao : CoinInfoDao,
+        private val mapper : CoinMapper,
+        private val apiService : ApiService) : ChildCoinWorkerFactory {
+
+        override fun create(
+            context: Context,
+            workerParameters: WorkerParameters
+        ): ListenableWorker {
+            return UpdateDataWorker(
+                context,
+                workerParameters,
+                coinInfoDao,
+                mapper,
+                apiService
+            )
         }
     }
 
