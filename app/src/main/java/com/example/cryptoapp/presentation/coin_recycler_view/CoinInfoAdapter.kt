@@ -1,4 +1,4 @@
-package com.example.cryptoapp.presentation
+package com.example.cryptoapp.presentation.coin_recycler_view
 
 import android.content.Context
 import android.view.LayoutInflater
